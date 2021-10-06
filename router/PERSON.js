@@ -34,6 +34,21 @@ router.post("/", async (req, res) => {
 });
 ////////////////////////////////////////////////
 
+router.get("/food", async (req, res) => {
+  try {
+    const { favoriteFoods } = req.body;
+    console.log(favoriteFoods);
+    const findperson = await person.findOne({
+      favoriteFoods: { $in: [favoriteFoods] },
+    });
+    res.send({ msg: "get the contact", findperson });
+    // res.send("ok")
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({ msg: "can not get the contact!!!" });
+  }
+});
+
 router.get("/:_id", async (req, res) => {
   try {
     const { _id } = req.params;
@@ -81,19 +96,15 @@ router.put("/:_id", async (req, res) => {
   }
 });
 /////////////////////////////////////////////////////////
-router.get("/food", async (req, res) => {
+
+/////////////////////////////////////////////////////////////
+router.delete("/:id", async (req, res) => {
   try {
-    const { favoriteFoods } = req.body;
-    console.log(favoriteFoods);
-    const findperson = await Person.findOne({
-      favoriteFoods: { $in: [favoriteFoods] },
-    });
-    res.send({ msg: "get the contact", findperson });
-    // res.send("ok")
+    const { id } = req.params;
+    let result = await Contact.deleteOne({ _id: id });
+    res.send({ msg: "deleted succ" });
   } catch (error) {
-    res.status(400).send({ msg: "can not get the contact" });
+    res.status(400).send({ msg: "can not delete" });
   }
 });
-/////////////////////////////////////////////////////////////
-
 module.exports = router;
