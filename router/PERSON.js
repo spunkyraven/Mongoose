@@ -96,15 +96,24 @@ router.put("/:_id", async (req, res) => {
   }
 });
 /////////////////////////////////////////////////////////
-
+router.delete("/all", async (req, res) => {
+  try {
+    const { name } = req.body;
+    const findperson = await person.deleteMany({ name });
+    res.send({ msg: "contact deleted" });
+  } catch (error) {
+    res.status(400).send({ msg: "no cantact" });
+  }
+});
 /////////////////////////////////////////////////////////////
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    let result = await Contact.deleteOne({ _id: id });
+    let result = await person.deleteOne({ _id: id });
     res.send({ msg: "deleted succ" });
   } catch (error) {
     res.status(400).send({ msg: "can not delete" });
   }
 });
+
 module.exports = router;
