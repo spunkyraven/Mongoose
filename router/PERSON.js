@@ -2,6 +2,7 @@ console.clear();
 const mongoose = require("mongoose");
 const express = require("express");
 const person = require("../models/person");
+const { find } = require("../models/person");
 const router = express.Router();
 
 //router.get("/", (req, res) => {
@@ -96,16 +97,23 @@ router.put("/:_id", async (req, res) => {
   }
 });
 /////////////////////////////////////////////////////////
+
 router.delete("/all", async (req, res) => {
+  const { name } = req.body;
   try {
-    const { name } = req.body;
-    const findperson = await person.deleteMany({ name });
-    res.send({ msg: "contact deleted" });
+    const findPerson = await person.deleteMany({ name });
+
+    if (findPerson.deletedCount) {
+      return res.send({ msg: "Deleted" });
+    } else {
+      return res.status(400).send({ msg: "there is no contact to Delete" });
+    }
   } catch (error) {
-    res.status(400).send({ msg: "no cantact" });
+    return res.sendStatus(400);
   }
 });
-/////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
