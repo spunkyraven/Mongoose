@@ -18,7 +18,7 @@ connectDB();
 // middleware to read the json type
 app.use(express.json());
 //middleware to the contacts route
-app.use("/hola", require("./router/PERSON"));
+app.use("/API", require("./router/PERSON"));
 //*********************   Creation server   ***************************************/
 // PORT
 const PORT = process.env.PORT;

@@ -10,7 +10,7 @@ const router = express.Router();
 //});
 //////////////////////////////////////////////
 
-router.get("/y", async (req, res) => {
+router.get("/allContacts", async (req, res) => {
   try {
     // step1 : i get the data from the database
     // Contact== ya collection contacts ija
